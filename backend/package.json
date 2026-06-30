@@ -2,19 +2,17 @@
   "name": "ai-brief-bot",
   "version": "1.0.0",
   "type": "module",
-  "description": "Бот-Бриф для составления ТЗ",
-  "main": "server.js",
+  "description": "AI-бот для составления ТЗ",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js",
-    "seed": "node seed.js"
+    "start": "node backend/server.js",
+    "seed": "node backend/seed.js"
   },
   "dependencies": {
-    "@langchain/core": "^1.2.1",
-    "@langchain/openai": "^1.5.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "langchain": "^0.1.0",
-    "openai": "^4.0.0"
+    "@langchain/openai": "^0.0.14",
+    "@langchain/core": "^0.1.0"
   }
 }
