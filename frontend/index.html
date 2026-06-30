@@ -3,253 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Бот-Бриф для ТЗ</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
-    body {
-      background: #0f0f1a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .chat-container {
-      width: 700px;
-      max-width: 96%;
-      background: #1e1e2f;
-      border-radius: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: 80vh;
-    }
-    .header {
-      background: #2a2a40;
-      padding: 20px 28px;
-      border-bottom: 1px solid #3b3b5a;
-    }
-    .header h2 {
-      color: #fff;
-      font-weight: 600;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .header h2 span {
-      background: #4f46e5;
-      font-size: 0.7rem;
-      padding: 4px 12px;
-      border-radius: 40px;
-      color: #fff;
-    }
-    .messages {
-      flex: 1;
-      padding: 20px 28px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: #181825;
-    }
-    .message {
-      max-width: 80%;
-      padding: 14px 20px;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      word-break: break-word;
-      animation: fadeIn 0.2s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .message.user {
-      background: #4f46e5;
-      color: #fff;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-    }
-    .message.bot {
-      background: #2d2d44;
-      color: #e4e4f0;
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-      white-space: pre-wrap;
-    }
-    .input-area {
-      background: #1e1e2f;
-      padding: 16px 28px 20px;
-      border-top: 1px solid #2d2d44;
-      display: flex;
-      gap: 12px;
-    }
-    .input-area input {
-      flex: 1;
-      padding: 14px 20px;
-      border: none;
-      border-radius: 40px;
-      background: #2d2d44;
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
-      transition: 0.2s;
-    }
-    .input-area input::placeholder {
-      color: #8888aa;
-    }
-    .input-area input:focus {
-      background: #3b3b5a;
-    }
-    .input-area button {
-      padding: 14px 30px;
-      border: none;
-      border-radius: 40px;
-      background: #4f46e5;
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .input-area button:hover {
-      background: #6366f1;
-      transform: scale(1.02);
-    }
-    .input-area button:disabled {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    .typing {
-      color: #8888aa;
-      font-size: 0.9rem;
-      padding: 6px 0 10px 0;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .typing::after {
-      content: '...';
-      animation: dots 1.2s steps(3, end) infinite;
-    }
-    @keyframes dots {
-      0% { content: ''; }
-      33% { content: '.'; }
-      66% { content: '..'; }
-      100% { content: '...'; }
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+  <title>AI-Бриф — ТЗ за 2 минуты</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <div class="header">
-      <h2>🧠 Бот-Бриф <span>ТЗ за 2 минуты</span></h2>
-    </div>
-    <div class="messages" id="messages">
-      <div class="message bot">
-        Привет! 👋 Я помогу тебе составить чёткое техническое задание для твоего проекта. <br/>
-        Расскажи, что ты хочешь сделать, и я задам тебе нужные вопросы.
+
+  <!-- ===== HERO СЕКЦИЯ ===== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">⚡ Бесплатно</div>
+        <h1 class="hero-title">Получите готовое <br /><span class="highlight">Техническое Задание</span> для вашего проекта <br />за 2 минуты</h1>
+        <p class="hero-desc">Ответьте на несколько вопросов — и ИИ-ассистент сформирует структурированный бриф, который можно сразу отправлять разработчикам.</p>
+        <a href="#chat" class="btn-primary">Начать →</a>
       </div>
     </div>
-    <div class="input-area">
-      <input type="text" id="input" placeholder="Напиши, что тебе нужно..." />
-      <button id="sendBtn">Отправить</button>
+  </section>
+
+  <!-- ===== СЕКЦИЯ ПРИМЕРОВ ===== -->
+  <section class="examples" id="examples">
+    <div class="container">
+      <h2 class="section-title">Примеры готовых ТЗ</h2>
+      <p class="section-subtitle">Посмотрите, как бот структурирует задачи под разные проекты</p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🦷</div>
+          <h3>Сайт-визитка для стоматолога</h3>
+          <p>Адаптивный дизайн, запись онлайн, галерея работ, контактная форма.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛒</div>
+          <h3>Интернет-магазин на React + Node.js</h3>
+          <p>Корзина, оплата через ЮKassa, админ-панель, интеграция с 1С.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h3>Телеграм-бот для доставки пиццы</h3>
+          <p>Меню, оформление заказа, онлайн-оплата, статусы доставки.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>Мобильное приложение (MVP)</h3>
+          <p>Поиск наставников, чат, профиль, система рейтинга.</p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <script>
-    const input = document.getElementById('input');
-    const sendBtn = document.getElementById('sendBtn');
-    const messages = document.getElementById('messages');
-    let controller = null; // для отмены запроса
+  <!-- ===== СЕКЦИЯ ЧАТА ===== -->
+  <section class="chat-section" id="chat">
+    <div class="container">
+      <div class="chat-wrapper">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <span class="chat-avatar">🤖</span>
+            <span class="chat-title">AI-Бриф</span>
+          </div>
+          <div class="chat-header-right">
+            <span class="chat-status">онлайн</span>
+            <button id="themeToggle" class="theme-toggle" title="Переключить тему">🌙</button>
+          </div>
+        </div>
+        <div class="chat-messages" id="messages">
+          <!-- Сообщения будут загружены из localStorage или показано приветствие -->
+        </div>
+        <div class="chat-input-area">
+          <div class="quick-buttons" id="quickButtons">
+            <button class="quick-btn" data-prompt="Сделай ТЗ для интернет-магазина на React + Node.js">🛒 Интернет-магазин</button>
+            <button class="quick-btn" data-prompt="Сделай ТЗ для Телеграм-бота для доставки пиццы">🤖 ТГ-бот</button>
+            <button class="quick-btn" data-prompt="Сделай ТЗ для лендинга стоматологии">🦷 Лендинг</button>
+            <button class="quick-btn" data-prompt="Сделай ТЗ для мобильного приложения MVP для поиска наставников">📱 MVP</button>
+          </div>
+          <div class="input-row">
+            <input type="text" id="input" placeholder="Напишите, что вам нужно..." />
+            <button id="sendBtn" class="btn-send">Отправить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function addMessage(text, sender) {
-      const div = document.createElement('div');
-      div.className = `message ${sender}`;
-      div.textContent = text;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-    }
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p>Сделано за вечер · <a href="https://github.com/artvonbel/ai-chat" target="_blank">GitHub</a></p>
+    </div>
+  </footer>
 
-    function showTyping() {
-      const div = document.createElement('div');
-      div.className = 'message bot typing';
-      div.id = 'typingIndicator';
-      div.textContent = 'Бот печатает';
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-    }
-
-    function removeTyping() {
-      const el = document.getElementById('typingIndicator');
-      if (el) el.remove();
-    }
-
-    async function sendMessage() {
-      const text = input.value.trim();
-      if (!text) return;
-
-      addMessage(text, 'user');
-      input.value = '';
-      sendBtn.disabled = true;
-      showTyping();
-
-      // Отменяем предыдущий запрос, если был
-      if (controller) controller.abort();
-      controller = new AbortController();
-
-      try {
-        const timeout = setTimeout(() => controller.abort(), 60000); // 60 секунд
-
-        const response = await fetch('http://localhost:5000/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question: text }),
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeout);
-        removeTyping();
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Ошибка сервера');
-        }
-
-        const data = await response.json();
-        if (data.answer) {
-          addMessage(data.answer, 'bot');
-        } else {
-          addMessage('❌ Пустой ответ от сервера.', 'bot');
-        }
-      } catch (error) {
-        removeTyping();
-        if (error.name === 'AbortError') {
-          addMessage('⏳ Превышено время ожидания. Попробуйте еще раз.', 'bot');
-        } else {
-          addMessage('❌ Ошибка: ' + error.message, 'bot');
-        }
-        console.error(error);
-      } finally {
-        sendBtn.disabled = false;
-        controller = null;
-      }
-    }
-
-    sendBtn.addEventListener('click', sendMessage);
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
-</script>
+  <script src="app.js"></script>
 </body>
 </html>
