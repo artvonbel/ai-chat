@@ -17,7 +17,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
 // Читаем инструкцию (файл лежит в папке backend)
-const instructions = fs.readFileSync('backend/brief_instructions.txt', 'utf8');
+const instructions = fs.readFileSync('brief_instructions.txt', 'utf8');
 
 // Настраиваем модель через OpenRouter
 const model = new ChatOpenAI({
