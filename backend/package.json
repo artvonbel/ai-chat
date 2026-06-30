@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "AI-бот для составления ТЗ",
-  "main": "backend/server.js",
+  "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
     "seed": "node backend/seed.js"
