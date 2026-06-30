@@ -16,9 +16,3 @@
 - `/backend` — серверная часть (API)
 - `/frontend` — интерфейс чата
 - `brief_instructions.txt` — база знаний бота (инструкция по составлению ТЗ)
-
-## 🛠️ Установка и запуск (локально)
-
-1. Клонируйте репозиторий:
-   ```bash
-   git clone https://github.com/artvonbel/ai-brief-bot.git
