@@ -69,9 +69,11 @@ text
 ## 🧑‍💻 Как запустить локально
 
 ### 1. Клонируйте репозиторий
+
 ```bash
 git clone https://github.com/artvonbel/ai-chat.git
 cd ai-chat
+
 2. Установите зависимости бэкенда
 bash
 npm install
