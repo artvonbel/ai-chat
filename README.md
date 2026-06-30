@@ -118,7 +118,6 @@ npm start
 
 ![Главный экран](screenshots/hero.png)
 ![Чат с ботом](screenshots/chat.png)
-![Экспорт и темы](screenshots/export.png)
 
 ---
 
