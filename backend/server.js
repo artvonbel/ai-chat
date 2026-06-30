@@ -6,31 +6,27 @@ import dotenv from 'dotenv';
 import { ChatOpenAI } from '@langchain/openai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
-// Загружаем переменные окружения
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Render сам задаёт порт через переменную окружения PORT
 const PORT = process.env.PORT || 5000;
 
-// Читаем инструкцию (файл лежит в папке backend)
-const instructions = fs.readFileSync('brief_instructions.txt', 'utf8');
+// читаем инструкцию (путь относительно корня проекта)
+const instructions = fs.readFileSync('backend/brief_instructions.txt', 'utf8');
 
-// Настраиваем модель через OpenRouter
 const model = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
-  modelName: 'openrouter/free', 
+  modelName: 'openrouter/free',
   temperature: 0.3,
-  timeout: 120000, 
+  timeout: 120000,
   configuration: {
     baseURL: 'https://openrouter.ai/api/v1',
   },
 });
 
-// Эндпоинт для чата
 app.post('/api/chat', async (req, res) => {
   const { question } = req.body;
   if (!question) {
@@ -39,7 +35,7 @@ app.post('/api/chat', async (req, res) => {
 
   try {
     const systemMessage = new SystemMessage(`
-Ты — бот-помощник по составлению технического задания для фрилансера.
+Ты — бот-помощник по составлению технического задания.
 Вот твоя инструкция:
 
 ${instructions}
@@ -48,7 +44,6 @@ ${instructions}
     `);
 
     const userMessage = new HumanMessage(question);
-
     const response = await model.invoke([systemMessage, userMessage]);
     res.json({ answer: response.content });
   } catch (error) {
@@ -56,6 +51,7 @@ ${instructions}
     res.status(500).json({ error: 'Ошибка при обращении к AI' });
   }
 });
+
 app.listen(PORT, () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });
