@@ -1,4 +1,4 @@
-// server.js — с таймаутом и быстрой моделью
+// backend/server.js
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
@@ -6,28 +6,31 @@ import dotenv from 'dotenv';
 import { ChatOpenAI } from '@langchain/openai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
+// Загружаем переменные окружения
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Render сам задаёт порт через переменную окружения PORT
 const PORT = process.env.PORT || 5000;
 
-// Читаем инструкцию
-const instructions = fs.readFileSync('brief_instructions.txt', 'utf8');
+// Читаем инструкцию (файл лежит в папке backend)
+const instructions = fs.readFileSync('backend/brief_instructions.txt', 'utf8');
 
-// НАСТРОЙКА: быстрая модель + таймаут 60 секунд
+// Настраиваем модель через OpenRouter
 const model = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
-  modelName: 'openrouter/free',
+  modelName: 'openrouter/free', 
   temperature: 0.3,
-  timeout: 60000,
+  timeout: 120000, 
   configuration: {
     baseURL: 'https://openrouter.ai/api/v1',
   },
 });
 
+// Эндпоинт для чата
 app.post('/api/chat', async (req, res) => {
   const { question } = req.body;
   if (!question) {
@@ -36,7 +39,7 @@ app.post('/api/chat', async (req, res) => {
 
   try {
     const systemMessage = new SystemMessage(`
-Ты — бот-помощник по составлению технического задания.
+Ты — бот-помощник по составлению технического задания для фрилансера.
 Вот твоя инструкция:
 
 ${instructions}
@@ -50,11 +53,9 @@ ${instructions}
     res.json({ answer: response.content });
   } catch (error) {
     console.error('Ошибка AI:', error);
-    // Отправляем понятную ошибку на фронтенд
-    res.status(500).json({ error: 'Превышено время ожидания или ошибка сервера. Попробуйте еще раз.' });
+    res.status(500).json({ error: 'Ошибка при обращении к AI' });
   }
 });
-
 app.listen(PORT, () => {
-  console.log(`🚀 Сервер запущен: http://localhost:${PORT}`);
+  console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });
